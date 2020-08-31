@@ -1,4 +1,5 @@
 const path = require('path')
+const config = require('./config')
 const express = require('express')
 const morgan = require('morgan')
 const compression = require('compression')
@@ -7,6 +8,7 @@ const passport = require('passport')
 const SequelizeStore = require('connect-session-sequelize')(session.Store)
 const db = require('./db')
 const sessionStore = new SequelizeStore({db})
+const {videoToken} = require('./tokens')
 const PORT = process.env.PORT || 8080
 const app = express()
 const socketio = require('socket.io')
@@ -69,6 +71,14 @@ const createApp = () => {
 
   // static file-serving middleware
   app.use(express.static(path.join(__dirname, '..', 'public')))
+  const sendTokenResponse = (token, res) => {
+    res.set('Content-Type', 'application/json')
+    res.send(
+      JSON.stringify({
+        token: token.toJwt()
+      })
+    )
+  }
 
   // any remaining requests with an extension (.js, .css, etc.) send 404
   app.use((req, res, next) => {
@@ -79,6 +89,28 @@ const createApp = () => {
     } else {
       next()
     }
+  })
+
+  app.get('/api/greeting', (req, res) => {
+    const name = req.query.name || 'World'
+    res.setHeader('Content-Type', 'application/json')
+    res.send(JSON.stringify({greeting: `Hello ${name}!`}))
+  })
+
+  app.get('/video/token', (req, res) => {
+    const identity = req.query.identity
+    const room = req.query.room
+
+    console.log('what is config', config)
+    const token = videoToken(identity, room, config)
+    sendTokenResponse(token, res)
+  })
+  app.post('/video/token', (req, res) => {
+    const identity = req.body.identity
+    const room = req.body.room
+    console.log('what is config', config)
+    const token = videoToken(identity, room, config)
+    sendTokenResponse(token, res)
   })
 
   // sends index.html
