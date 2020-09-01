@@ -639,10 +639,10 @@ const Room = ({roomName, token, handleLogout}) => {
       <h2>Room: {roomName}</h2>
       <button onClick={handleLogout}>Log out</button>
       <div className="local-participant">
-        {room ? (
+        {stateRoom ? (
           <Participant
-            key={room.localParticipant.sid}
-            participant={room.localParticipant}
+            key={stateRoom.localParticipant.sid}
+            participant={stateRoom.localParticipant}
             handleVillagerVoteButton={handleVillagerVoteButton}
             handleSeerCheckButton={handleSeerCheckButton}
             handleMedicSaveButton={handleMedicSaveButton}
