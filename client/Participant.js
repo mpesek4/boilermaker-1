@@ -1,3 +1,5 @@
+/* eslint-disable react/button-has-type */
+/* eslint-disable complexity */
 import React, {useState, useEffect, useRef} from 'react'
 
 import VideoAudio from './VideoAudio'

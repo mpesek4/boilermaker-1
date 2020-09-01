@@ -641,8 +641,8 @@ const Room = ({roomName, token, handleLogout}) => {
       <div className="local-participant">
         {room ? (
           <Participant
-            key={stateRoom.localParticipant.sid}
-            participant={stateRoom.localParticipant}
+            key={room.localParticipant.sid}
+            participant={room.localParticipant}
             handleVillagerVoteButton={handleVillagerVoteButton}
             handleSeerCheckButton={handleSeerCheckButton}
             handleMedicSaveButton={handleMedicSaveButton}
