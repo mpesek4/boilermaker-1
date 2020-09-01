@@ -511,7 +511,7 @@ const Room = ({roomName, token, handleLogout}) => {
         )
         setTimeout(function() {
           alert('Hello')
-        }, 3000)
+        }, 0)
 
         console.log('player identity AFTER ', playerIdentitys)
 
@@ -641,8 +641,8 @@ const Room = ({roomName, token, handleLogout}) => {
       <div className="local-participant">
         {room ? (
           <Participant
-            key={room.localParticipant.sid}
-            participant={room.localParticipant}
+            key={stateRoom.localParticipant.sid}
+            participant={stateRoom.localParticipant}
             handleVillagerVoteButton={handleVillagerVoteButton}
             handleSeerCheckButton={handleSeerCheckButton}
             handleMedicSaveButton={handleMedicSaveButton}
