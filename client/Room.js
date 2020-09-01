@@ -1,10 +1,11 @@
+/* eslint-disable max-statements */
 import React, {useState, useEffect} from 'react'
 import Video from 'twilio-video'
 import Participant from './Participant'
 import {db} from './firebase'
 
 const Room = ({roomName, token, handleLogout}) => {
-  const [room, setRoom] = useState(null)
+  const [stateRoom, setStateRoom] = useState(null)
   const [participants, setParticipants] = useState([])
 
   // potentially needed game logic state
@@ -523,7 +524,7 @@ const Room = ({roomName, token, handleLogout}) => {
       Video.connect(token, {
         name: roomName
       }).then(async room => {
-        setRoom(room)
+        setStateRoom(room)
         setParticipants(prevParticipants => [
           ...prevParticipants,
           room.localParticipant
@@ -589,7 +590,7 @@ const Room = ({roomName, token, handleLogout}) => {
       })
 
       return () => {
-        setRoom(async currentRoom => {
+        setStateRoom(currentRoom => {
           if (
             currentRoom &&
             currentRoom.localParticipant.state === 'connected'
